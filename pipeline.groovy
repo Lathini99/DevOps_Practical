@@ -2,19 +2,25 @@ pipeline {
   agent any
 
   stages {
-    stage('Stage-1'){
+    stage('Dockerize the application'){
       steps{
-        echo 'Stage1-Completed'
+       script{
+          sh 'docker build -t sample .'
+        }
       }
     }
-     stage('Stage-2'){
+     stage('Verify Docker images'){
       steps{
-        echo 'Stage2-Completed'
+         script{
+          sh 'docker images'
+        }
       }
      }
-     stage('Stage-3'){
+     stage('Run the Docker container'){
       steps{
-        echo 'Stage3-Completed'
+         script{
+          sh 'docker run --name flask_app  -p 8000:5000 sample'
+        }
       }
      }
   }
